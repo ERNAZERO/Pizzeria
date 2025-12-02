@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>PizzaRoute</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}" />
+  <th:block th:insert="~{fragments :: headerfiles}"></th:block>
+</head>
+<body>
+<!-- Header -->
+
+<div th:insert="~{fragments :: header(cartQuantity=${cartQuantity})}"></div>
+
+<!-- Wilkommen Teil -->
+
+<div class="welcome-wrapper">
+  <div class="welcome-container">
+    <div class="welcome-container-right">
+      <img th:src="@{/images/pizza_main.png}" alt="Pizza" />
+    </div>
+    <div class="welcome-container-left">
+      <h1>Die leckerste & <span>beste Pizza</span> auf der ganzen Welt.</h1>
+      <h4>
+        Bei uns dreht sich alles um frische Zutaten, fantastische
+        Geschmacksrichtungen und die perfekte Pizza für Sie! Sind Sie
+        bereit, loszulegen? Fangen wir an!
+      </h4>
+      <a th:href="@{/catalog}">
+        <button class="primary-button">Bestellen</button>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Last 4 items -->
+<h2>Menü</h2>
+<div class="menu-wrapper">
+  <div th:each="pizza : ${pizzas}" class="menu-item">
+    <a th:href="@{/catalog/{id}(id=${pizza.getPizzaId()})}">
+      <img th:src="${pizza.getImage()}" alt="Pizza" />
+      <h3 th:text="${pizza.getName()}">Pizza Name</h3>
+      <h4 th:text="${#numbers.formatDecimal(pizza.getPizzaPrices()[0].price, 1, 'POINT', 2, 'COMMA')}  + ' €'">€ 10.00</h4>
+    </a>
+  </div>
+</div>
+
+<div class="primary-button-wrapper">
+  <a th:href="@{/catalog}" class="primary-button">Mehr</a>
+</div>
+
+<div class="banner-wrapper">
+  <div class="banner-container">
+    <img th:src="@{/images/chef_logo.svg}" alt="chef_logo" />
+    <div class="banner-text-and-button">
+      <p>
+        Hungrig? Tippen Sie auf „Kaufen“ und lassen Sie sich Ihr
+        Lieblingsstück frisch und schnell liefern!
+      </p>
+      <button class="primary-button">Bestellen</button>
+    </div>
+  </div>
+</div>
+
+<div class="why-us-wrapper">
+  <h2>Warum PizzaRoute?</h2>
+  <div class="why-us-container">
+    <div class="why-us-item">
+      <img th:src="@{/images/frische.svg}" alt="why_us_1" />
+      <h3>Frische Zutaten, immer</h3>
+      <p>
+        We use only the finest, freshest ingredients to make every pizza
+        bursting with flavor. You’ll taste the quality in every bite!
+      </p>
+    </div>
+    <div class="why-us-item">
+      <img th:src="@{/images/schneller.svg}" alt="why_us_2" />
+      <h3>Schneller & freundlicher Service</h3>
+      <p>
+        Wir wissen, dass Sie hungrig sind, und deshalb bemühen wir uns,
+        Ihnen Ihre Pizza schnell zu liefern, ohne dass die Qualität darunter
+        leidet. Großer Geschmack, pünktlich!
+      </p>
+    </div>
+    <div class="why-us-item">
+      <img th:src="@{/images/local.svg}" alt="why_us_3" />
+      <h3>Lokal geliebt und vertrauenswürdig</h3>
+      <p>
+        Unsere Kunden kommen immer wieder, weil wir uns stets für köstliche
+        Pizzen und eine freundliche Atmosphäre einsetzen.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div th:insert="~{fragments :: footer}"></div>
+</body>
+</html>

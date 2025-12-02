@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Pizza Management</title>
+    <link rel="stylesheet" th:href="@{/css/admins-css/admin-main.css}" href="/css/admins-css/admin-main.css"/>
+    <link rel="stylesheet" th:href="@{/css/admins-css/admin-errors.css}">
+    <th:block th:insert="~{admin-fragment :: admin-fragments-css}"></th:block>
+
+  </head>
+  <body>
+
+  <div th:insert="~{admin-fragment :: admin-header}"></div>
+
+    <main>
+      <div class="container">
+        <h2>Pizzas List</h2>
+        <form th:action="@{/admin}" method="get">
+          <!-- Text Search -->
+          <div class="search-box-container">
+            <input
+                    type="text"
+                    name="search"
+                    placeholder="Suche nach Name, Beschreibung"
+                    th:value="${search}" />
+            <!-- Status Filter -->
+            <select name="status">
+              <option value="" th:selected="${status == null || status == ''}">Alle Status</option>
+              <option value="ACTIVE" th:selected="${status == 'ACTIVE'}">Aktiv</option>
+              <option value="ARCHIVE" th:selected="${status == 'ARCHIVE'}">Archiviert</option>
+              <option value="DELETED" th:selected="${status == 'DELETED'}">Gelöscht</option>
+            </select>
+
+            <!-- Submit Button -->
+            <button type="submit">Suche</button>
+          </div>
+        </form>
+
+        <ul class="responsive-table">
+          <li class="table-header">
+            <div class="col col-1">ID</div>
+            <div class="col col-2">Pizza Name</div>
+            <div class="col col-3">Pizza Status</div>
+            <div class="col col-4">Aktion</div>
+          </li>
+          <li class="table-row" th:each="pizza:${pizzas}">
+            <div class="col col-1" data-label="ID" th:text="${pizza.getPizzaId()}">ID</div>
+            <div class="col col-2" data-label="Pizza Name" th:text="${pizza.getName()}">NAME</div>
+            <div class="col col-3" data-label="Pizza Status" th:text="${pizza.getStatus()}">STATUS</div>
+            <div class="col col-4 btns" data-label="ACTION">
+              <a th:href="@{/admin/pizza/{id}(id=${pizza.getPizzaId()})}" class="btn-view">siehe</a>
+              <a th:href="@{/admin/pizza/edit/{id}(id=${pizza.getPizzaId()})}" class="btn-edit">bearbeiten</a>
+              <form th:action="@{/admin/pizza/archive/{id}(id=${pizza.getPizzaId()})}" method="post" style="width: auto">
+                <button type="submit" class="btn-archive" th:if="${pizza.getStatus() == statuses[0]}">archivieren</button>
+              </form>
+              <!-- Restore Pizza -->
+              <form th:action="@{/admin/pizza/restore/{id}(id=${pizza.getPizzaId()})}" method="post" th:if="${pizza.getStatus() == statuses[1]}"  style="width: auto">
+                <div class="btn-wrapper">
+                  <button type="submit" class="btn-archive">wiederherstellen</button>
+                </div>
+              </form>
+
+              <!-- Delete Pizza -->
+              <form th:action="@{/admin/pizza/delete/{id}(id=${pizza.getPizzaId()})}" method="post" th:if="${pizza.getStatus() == statuses[0] || pizza.getStatus() == statuses[1]}"  style="width: auto">
+                <button type="submit" class="btn-delete">löschen</button>
+              </form>
+
+              <!-- Recover Pizza -->
+              <form th:action="@{/admin/pizza/recover/{id}(id=${pizza.getPizzaId()})}" method="post" th:if="${pizza.getStatus() == statuses[2]}"  style="width: auto">
+                <button type="submit" class="btn-delete">erholen</button>
+              </form>
+
+            </div>
+          </li>
+          <li class="empty_box" th:if="${pizzas.isEmpty()}">
+            <h3 style="width: 100%; text-align: center;">No pizzas found</h3>
+          </li>
+
+        </ul>
+        <div class="pagination-wrapper">
+          <div th:if="${totalPages > 1}">
+            <ul class="pagination">
+              <li th:if="${currentPage > 0}">
+                <a th:href="@{/catalog(page=${currentPage - 1}, size=${size}, search=${param.search})}">Previous</a>
+              </li>
+              <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                <a th:href="@{/catalog(page=${i}, size=${size}, search=${param.search})}"
+                   th:text="${i + 1}"
+                   th:classappend="${i == currentPage} ? 'active' : ''"></a>
+              </li>
+              <li th:if="${currentPage < totalPages - 1}">
+                <a th:href="@{/catalog(page=${currentPage + 1}, size=${size}, search=${param.search})}">Next</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <a href="admin/add" class="float">
+      <img class="my-float" th:src="@{/images/plus_icon.svg}" alt="">
+    </a>
+
+  </body>
+</html>

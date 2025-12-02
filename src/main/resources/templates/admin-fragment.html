@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:fragment="admin-fragments-css">
+    <meta charset="UTF-8">
+    <title>Admins Fragment</title>
+    <link rel="stylesheet" th:href="@{/css/admins-css/header.css}" >
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+
+</head>
+<body>
+
+<header th:fragment="admin-header">
+    <img th:src="@{/images/logo_main.svg}" alt="logo" />
+    <ul>
+        <li><a th:href="@{/admin}">Pizzas</a></li>
+        <li><a th:href="@{/admin/order}">Orders</a></li>
+        <li><a th:href="@{/admin/users}">Users</a></li>
+    </ul>
+    <a th:href="@{/logout}">Abmelden</a>
+</header>
+
+
+</body>
+</html>

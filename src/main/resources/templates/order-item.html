@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Item</title>
+    <link rel="stylesheet" th:href="@{/css/order-item.css}" />
+    <th:block th:insert="~{fragments :: headerfiles}"></th:block>
+</head>
+<body>
+
+<div th:insert="~{fragments :: header(cartQuantity=${0})}"></div>
+
+<div class="container-wrapper">
+  <div class="container">
+    <h2>Bestellung <span th:text="${order.getCartId()}">ID</span></h2>
+    <div class="order-wrapper">
+      <div class="order-left">
+        <div class="order-details">
+          <h3>Details zur Bestellung</h3>
+          <div class="order-detail">
+            <h4>Datum der Bestellung</h4>
+            <p th:text="${order.getFormattedDate()}">Order Date</p>
+          </div>
+          <div class="order-detail">
+            <h4>Preis bestellen</h4>
+            <p th:text="${order.calculateTotalPrice()} + ' €'">Order Price</p>
+          </div>
+          <div class="order-detail">
+            <h4>Status der Bestellung</h4>
+            <p th:text="${order.cartStatus}">Order Status</p>
+          </div>
+          <div class="order-detail">
+            <h4>Address</h4>
+            <p th:text="${order.deliveryAddress.getStreetHouseNumber() + ', ' + order.deliveryAddress.getTown()}">Order Status</p>
+          </div>
+        </div>
+        <div class="back-button-wrapper">
+          <a class="back-button" th:href="@{/customer/account}">Zurück</a>
+        </div>
+      </div>
+        <div class="vl"></div>
+        <div class="order-right">
+          <h3>Artikel bestellen</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Bild</th>
+                <th>Produkt</th>
+                <th>Menge</th>
+                <th>Preis</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="cart-item" th:each="item : ${order.items}">
+                <td><img th:src="${item.pizza.image}" alt="pizza image"/></td>
+                <td th:text="${item.pizza.name}">Product Name</td>
+                <td th:text="${item.quantity}">Product Quantity</td>
+                <td th:text="${item.currentPrice  + ' €'}">Product Price</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div th:insert="~{fragments :: footer}"></div>
+
+</body>
+</html>

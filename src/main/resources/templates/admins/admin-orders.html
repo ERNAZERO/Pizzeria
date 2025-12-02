@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Orders Management</title>
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admins-css/admin-orders.css}"
+    />
+    <th:block th:insert="~{admin-fragment :: admin-fragments-css}"></th:block>
+
+</head>
+<body>
+
+<div th:insert="~{admin-fragment :: admin-header}"></div>
+
+<main>
+    <div class="container">
+        <h2>Orders List</h2>
+        <div class="search-box-container">
+            <input type="text" placeholder="Search Orders" />
+            <button type="submit">Search</button>
+        </div>
+
+        <ul class="responsive-table">
+            <li class="table-header">
+                <div class="col col-1">ID</div>
+                <div class="col col-2">User Name</div>
+                <div class="col col-3">Uhr</div>
+                <div class="col col-4">Action</div>
+            </li>
+            <li class="table-row" th:each="order : ${orders}">
+                <div class="col col-1" data-label="ID" th:text="${order.cartId}">42235</div>
+                <div class="col col-2" data-label="Pizza Name" th:text="${order.users.firstName + ' ' + order.users.lastName}">USER USER</div>
+                <div class="col col-3" data-label="Pizza Status" th:text="${order.formattedDate}">18:90</div>
+                <div class="col col-4 btns" data-label="ACTION">
+                    <a th:href="@{/admin/order/{id}(id = ${order.getCartId()})}" class="btn-view">View</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</main>
+</body>
+</html>

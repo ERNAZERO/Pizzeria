@@ -1,0 +1,14 @@
+<configuration>
+    <property name="LOG_PATTERN" value="%highlight(%-5level) %cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %green(%logger{36}) - %msg%n" />
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+    <logger name="org.springframework" level="INFO" />
+    <logger name="com.yourpackage" level="DEBUG" />
+</configuration>

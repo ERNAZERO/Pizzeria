@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin User Address Edit</title>
+    <link rel="stylesheet" th:href="@{/css/address-edit.css}">
+    <th:block th:insert="~{admin-fragment :: admin-fragments-css}"></th:block>
+</head>
+<body>
+
+<div th:insert="~{admin-fragment :: admin-header}"></div>
+
+<div class="container-wrapper">
+    <div class="container">
+        <h2>Addresses</h2>
+        <div class="menu-wrapper">
+            <div th:each="address : ${deliveryAddresses}" class="item-wrapper">
+                <a th:href="@{/admin/users/address-edit/{userId}/{id}(userId=${userId}, id=${address.deliveryAddressId})}"
+                   class="menu-item">
+                    <h3 th:text="${address.town}">City</h3>
+                    <h4 th:text="${address.streetHouseNumber}">Street and house</h4>
+                    <span th:text="${address.postalCode}">Postal Code</span>
+                </a>
+            </div>
+
+            <div th:if="${deliveryAddresses.size() <= 3}" class="item-wrapper">
+                <a th:href="@{/admin/users/new-address/{userId}(userId=${userId})}" class="menu-item-new">
+                    <h3>Neue Adresse</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

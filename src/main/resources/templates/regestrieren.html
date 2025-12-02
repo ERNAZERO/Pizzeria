@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Regestrieren Seit</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/regestrieren.css}">
+
+</head>
+<body>
+
+<div class="container-wrapper">
+
+    <div class="container">
+        <div class="login-form">
+            <img src="/images/logo_chef.svg" alt="Pizza">
+            <h2>Regestrieren</h2>
+            <form action="/register" method="post">
+                <div class="all-inputs">
+                    <div class="left-side">
+                        <div class="input_placeholder">
+                            <img src="/images/user_icon.svg" alt="">
+                            <input type="text" name="firstName" placeholder="Vorname" th:value="${user.firstName}" required>
+                        </div>
+                        <div class="input_placeholder">
+                            <img src="/images/user_icon.svg" alt="">
+                            <input  type="text" name="lastName" placeholder="Nachname" th:value="${user.lastName}" required>
+                        </div>
+                        <div class="input_placeholder">
+                            <img src="/images/email.svg" alt="">
+                            <input id="email" type="email" name="email" placeholder="Email" th:value="${user.email}" required>
+                        </div>
+                        <div class="input_placeholder">
+                            <img src="/images/pin_icon.svg" alt="">
+                            <input id="strasse" type="text" name="street" placeholder="Straße" th:value="${user.street}" required>
+                        </div>
+                    </div>
+
+                    <div class="right-side">
+                        <div class="input_placeholder">
+                            <img src="./images/password.svg" alt="">
+                            <input id="password" type="password" name="passwordHash" placeholder="Password" autocomplete="off" required>
+                        </div>
+                        <div class="input_placeholder">
+                            <img src="/images/password.svg" alt="">
+                            <input id="password_repeat" type="password" name="passwordHashConfirm" autocomplete="off" placeholder="Wiederholung des Passworts" required>
+                        </div>
+                        <div class="input_placeholder">
+                            <img src="/images/pin_icon.svg" alt="">
+                            <input id="city" type="text" name="town" placeholder="Stadt" th:value="${user.town}" required>
+                        </div>
+                        <div class="house-nr-postcode-container">
+                            <div class="input_placeholder">
+                                <input id="house_nr" type="text" name="houseNumber" th:value="${user.houseNumber}" placeholder="Haus Nr." required>
+                            </div>
+                            <div class="input_placeholder">
+                                <input id="postleitzahl" type="text" pattern="[0-9]{5}" name="postalCode" th:value="${user.postalCode}" placeholder="Postleitzahl" maxlength="5" required>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="color: darkred" th:if="${!error.isEmpty()}" th:text="${error}">ERROR</div>
+                <div class="buttons">
+                    <a class="login-button" href="login.html">Anmelden</a>
+                <button class="primary-button" type="submit" id="submit">Regestrieren</button>
+                </div>
+            </form>
+    </div>
+</div>
+</div>
+</body>
+</html>
+
+<script>
+    const submitButttom = document.getElementById("submit");
+    submitButttom.addEventListener('click',()=>{
+        const vorname = document.getElementById('vorname').value;
+        const nachname = document.getElementById('nachname').value;
+        const email = document.getElementById('email').value;
+        const strasse = document.getElementById('strasse').value;
+        const password = document.getElementById('password').value;
+        const password_repeat = document.getElementById('password_repeat').value;
+        const city = document.getElementById('city').value;
+        const house_nr = document.getElementById('house_nr').value;
+        // const postleitzahl = document.getElementById('postleitzahl').value;
+
+
+        const data ={
+            vorname,
+            nachname,
+            email,
+            strasse,
+            password,
+            password_repeat,
+            city,
+            house_nr,
+            // postleitzahl
+        }
+
+        if(password == password_repeat){
+            const jsonData = JSON.stringify(data);
+            fetch('/regestrieren', {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+                .then(response =>{
+                    alert('succesfull');
+                    if(response.status == 200){
+                    alert('succesfull');
+                    xs}
+                })
+        }
+
+    })
+
+
+</script>

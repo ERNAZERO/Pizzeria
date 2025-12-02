@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ordering</title>
+    <link rel="stylesheet" th:href="@{/css/orderMaking.css}">
+    <th:block th:insert="~{fragments :: headerfiles}"></th:block>
+</head>
+<body>
+
+<div th:insert="~{fragments :: header(cartQuantity=${0})}"></div>
+
+<div class="container-wrapper">
+  <div class="container">
+      <iframe src="https://lottie.host/embed/eca20d51-b30a-4804-b77d-1cb34579ef33/CgoA74lE2V.lottie"></iframe>
+      <h2>🎉 Herzlichen Glückwunsch! Ihre Bestellung wurde erfolgreich aufgegeben! 🎉</h2>
+      <span>Vielen Dank, dass Sie sich für uns entschieden haben. Wir bereiten alles vor, um sicherzustellen, dass Ihre Bestellung perfekt ist.
+Wenn Sie Fragen haben oder Hilfe benötigen, können Sie uns gerne kontaktieren.
+Ich wünsche Ihnen einen schönen Tag!“</span>
+        <div th:replace="~{fragments :: primaryButton(href='/catalog', text='Menü')}"></div>
+  </div>
+</div>
+
+<div th:insert="~{fragments :: footer}"></div>
+
+</body>
+</html>

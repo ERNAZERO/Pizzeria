@@ -1,0 +1,199 @@
+@import url("https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+body {
+    font-family: "Inria Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main View */
+
+.container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0;
+    height: 80vh;
+}
+
+.container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    height: 100%;
+}
+
+.container h2 {
+    font-family: "Josefin Slab", serif;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.profile-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+.profile-left-side {
+    height: 100%;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    margin-right: 20px;
+}
+
+.img-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-left-side img {
+    width: 60%;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-left-side h3 {
+    font-family: "Inria Sans", serif;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.profile-left-side span {
+    font-size: 16px;
+    color: black;
+}
+
+.profile-right-side {
+    height: 100%;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+.vl {
+    border-left: 1px solid #ddd;
+    height: 100%;
+    margin-right: 20px;
+}
+
+.profile-right-side h3 {
+    width: 100%;
+    text-align: center;
+    font-family: "Josefin Slab", serif;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: black;
+}
+
+
+.empty-orders {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-family: "Inria Sans", serif;
+    font-size: 1.5em;
+    color: #666;
+}
+
+iframe {
+    width: 100%;
+    height: 80%;
+    border: none;
+}
+
+.profile-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-buttons a {
+    width: 70%;
+    padding: 10px 20px;
+    background-color: #1f1f1f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.profile-buttons a:hover {
+    background-color: #da592f;
+    transition: 0.5s;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead {
+    background-color: #f5f5f5;
+}
+
+table th {
+    padding: 20px;
+    text-align: left;
+}
+
+table td {
+    padding: 20px;
+    margin-top: 10px;
+    border-bottom: 1px solid #f5f5f5;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 16px;
+}
+
+table td img {
+    height: 50px;
+    object-fit: cover;
+}
+
+table td a {
+    padding: 5px 10px;
+    background-color: #da592f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+table td a:hover {
+    background-color: #1f1f1f;
+    transition: 0.5s;
+}
+
+

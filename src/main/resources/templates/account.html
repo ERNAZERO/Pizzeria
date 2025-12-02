@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" th:href="@{/css/account.css}">
+    <th:block th:insert="~{fragments :: headerfiles}"></th:block>
+
+</head>
+<body>
+
+<div th:insert="~{fragments :: header(cartQuantity=${cartQuantity})}"></div>
+
+<div class="container-wrapper">
+    <div class="container">
+        <h2>Profil</h2>
+        <div class="profile-wrapper">
+            <div class="profile-left-side">
+                <div>
+                    <div class="img-wrapper">
+                        <img th:src="@{/images/customer_img.png}" alt="logo">
+                    </div>
+                    <h3>Name: <span th:text="${user.firstName + ' ' + user.lastName}">FULLNAME</span></h3>
+                    <h3>Email: <span th:text="${user.email}">EMAIL</span></h3>
+                    <h3>Adresse: <span th:text="${user.deliveryAddress.get(0).toString()}">Address</span></h3>
+                </div>
+                <div class="profile-buttons">
+                    <a th:href="@{/admin}" th:if="${user.accType.equals(adminRole)}">Admin Panel</a>
+                    <a th:href="@{/customer/address-edit}">Address bearbeitenl</a>
+                    <a th:href="@{/customer/account-edit}">Profil bearbeiten</a>
+                    <a th:href="@{/logout}">Abmeldung</a>
+                </div>
+            </div>
+            <div class="vl"></div>
+            <div class="profile-right-side">
+                <h3>Bestellungen</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Datum der Bestellung</th>
+                        <th>Preis bestellen</th>
+                        <th>Aktion</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${orders}" class="cart-item">
+                        <td><div th:text="${order.getFormattedDate()}">Date</div></td>
+                        <td><div th:text="${order.calculateTotalPrice()}">Price</div></td>
+                        <td><a th:href="@{/customer/order-item/{id}(id = ${order.getCartId()})}">View</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="empty-orders" th:if="${orders.isEmpty()}">
+                    <iframe src="https://lottie.host/embed/9ad2c3c4-3d56-469f-8f9d-cacb1f0c4e94/0AiKyMF6cg.lottie"></iframe>
+                    <h4>Noch keine Bestellungen</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div th:insert="~{fragments :: footer}"></div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modalBody = document.getElementById("modalBody");
+        document.querySelectorAll(".view-order-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const orderId = this.getAttribute("data-order-id");
+                modalBody.innerHTML = document.getElementById(`order-details-${orderId}`).innerHTML;
+            });
+        });
+    });
+</script>
+
+
+</body>
+</html>

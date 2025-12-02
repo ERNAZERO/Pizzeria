@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pizza</title>
+    <link
+      rel="stylesheet"
+      th:href="@{/css/admins-css/admin-pizza-view.css}"
+    />
+    <link rel="stylesheet" th:href="@{/css/admins-css/header.css}"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <img th:src="@{/images/logo_main.svg}" alt="logo" />
+      <ul>
+        <li><a href="admin-main.html">Pizzas</a></li>
+        <li><a href="admin-orders.html">Orders</a></li>
+        <li><a href="admin-users.html">Users</a></li>
+      </ul>
+      <a href="#">Abmelden</a>
+    </header>
+
+    <div class="container-wrapper">
+      <div class="container">
+        <div class="item-container">
+          <img th:src="${pizza.getImage()}" alt="" />
+          <div class="text-side-container">
+            <span th:text="${pizza.getName()}">Pepperoni Pizza</span>
+            <p th:text="${pizza.getDescription()}">
+              Bei uns dreht sich alles um frische Zutaten, fantastische
+              Geschmacksrichtungen und die perfekte Pizza für Sie! Sind Sie
+              bereit, loszulegen? Fangen wir an! Bei uns dreht sich alles um
+              frische Zutaten, fantastische Geschmacksrichtungen und die
+              perfekte Pizza für Sie! Sind Sie bereit, loszulegen? Fangen wir
+              an!
+            </p>
+            <p th:text="${pizza.getCreatedDate()}"><small>12.01.2000</small></p>
+            <div class="prices" th:each="price:${pizza.getPizzaPrices()}">
+                <span th:text="${price.getPizzaSize() + ': ' + price.getPrice() + '€'}">Small: 10.00€</span>
+            </div>
+            <div class="btns">
+              <a th:href="@{/admin/pizza/edit/{id}(id=${pizza.getPizzaId()})}" class="btn-edit">bearbeiten</a>
+              <form th:action="@{/admin/pizza/archive/{id}(id=${pizza.getPizzaId()})}" method="post" style="width: auto">
+                <button type="submit" class="btn-archive" th:if="${pizza.getStatus() == statuses[0]}">archivieren</button>
+              </form>
+              <!-- Restore Pizza -->
+              <form th:action="@{/admin/pizza/restore/{id}(id=${pizza.getPizzaId()})}" method="post" th:if="${pizza.getStatus() == statuses[1]}"  style="width: auto">
+                <div class="btn-wrapper">
+                  <button type="submit" class="btn-archive">wiederherstellen</button>
+                </div>
+              </form>
+
+              <!-- Delete Pizza -->
+              <form th:action="@{/admin/pizza/delete/{id}(id=${pizza.getPizzaId()})}" method="post" th:if="${pizza.getStatus() == statuses[0] || pizza.getStatus() == statuses[1]}"  style="width: auto">
+                <button type="submit" class="btn-delete">löschen</button>
+              </form>
+
+              <!-- Recover Pizza -->
+              <form th:action="@{/admin/pizza/recover/{id}(id=${pizza.getPizzaId()})}" method="post" th:if="${pizza.getStatus() == statuses[2]}"  style="width: auto">
+                <button type="submit" class="btn-delete">erholen</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Warenkorb</title>
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
+    <th:block th:insert="~{fragments :: headerfiles}"></th:block>
+</head>
+<body>
+
+<div th:insert="~{fragments :: header(cartQuantity=${cart.getItems().size()})}"></div>
+
+<div class="container-wrapper">
+    <div class="container">
+        <h2>Warenkorb</h2>
+        <table th:if="${cart.getItems().size() != 0}">
+            <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Remove</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cart.getItems()}" class="cart-item">
+                <td><img th:src="${item.pizza.image}" alt="Pizza" /></td>
+                <td th:text="${item.pizza.name}">Pizza Name</td>
+                <td>
+                    <form th:action="@{/cart/updateSize}" method="post">
+                        <input type="hidden" name="itemId" th:value="${item.itemId}" />
+                        <select name="size" class="size-select" onchange="this.form.submit()">
+                            <option value="SMALL" th:selected="${item.size == pizzaSizes[2]}" th:data-price="${item.pizza.getPizzaPrices()[0].price}">Small</option>
+                            <option value="MEDIUM" th:selected="${item.size == pizzaSizes[1]}" th:data-price="${item.pizza.getPizzaPrices()[1].price}">Medium</option>
+                            <option value="LARGE" th:selected="${item.size == pizzaSizes[0]}" th:data-price="${item.pizza.getPizzaPrices()[2].price}">Large</option>
+                        </select>
+                    </form>
+                </td>
+                <td class="price-display"  th:text="${item.pizza.getPizzaPrices()[0].price}">Price</td>
+                <td>
+                    <div class="counter-wrapper">
+                        <form th:action="@{/cart/updateQuantity}" method="post">
+                            <div class="counter">
+                                <input type="hidden" name="itemId" th:value="${item.itemId}" />
+                                <button type="submit" name="action" value="decrement">-</button>
+                                <div th:text="${item.quantity}"></div>
+                                <button type="submit" name="action" value="increment">+</button>
+                            </div>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <form th:action="@{/cart/remove}" method="post">
+                        <input type="hidden" name="itemId" th:value="${item.itemId}" />
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td>
+                    <div  th:if="${selectedAddress != null}">
+                        <form th:action="@{/cart/addDeliveryAddress}" method="post">
+                            <input type="hidden" name="cartId" th:value="${cart.cartId}"/>
+                            <label for="deliveryAddress">Lieferadresse:</label>
+                            <select id="deliveryAddress" name="addressId" class="size-select" onchange="this.form.submit()" required>
+                                <option th:each="address : ${userAddress}"
+                                        th:value="${address.deliveryAddressId}"
+                                        th:selected="${address.deliveryAddressId == selectedAddress}"
+                                        th:text="${address.street + ', ' + address.town}">
+                                </option>
+                            </select>
+                        </form>
+                    </div>
+                </td>
+                <td colspan="2" style="text-align: right;"><strong>Total:</strong></td>
+                <td th:text="${cart.calculateTotalPrice()}">Total Price</td>
+                <td>
+                    <form th:action="@{/cart/order/{id}(id=${cart.getCartId()})}" method="post">
+                        <button type="submit" style="background-color: #27ae60">Bestellung</button>
+                    </form>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+        <div th:if="${cart.getItems().size() == 0}" class="empty-cart">
+            <img th:src="@{/images/empty-cart.png}" alt="Empty Cart" />
+            <h3>Your cart is empty.</h3>
+            <a th:href="@{/catalog}">Menü</a>
+        </div>
+    </div>
+</div>
+
+
+<div th:insert="~{fragments :: footer}"></div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Select all cart items
+        const cartItems = document.querySelectorAll(".cart-item");
+
+        cartItems.forEach(cartItem => {
+            const sizeSelect = cartItem.querySelector(".size-select");
+            const priceDisplay = cartItem.querySelector(".price-display");
+
+            // Initialize the price based on the default selection
+            updatePrice(sizeSelect, priceDisplay);
+
+            // Update price dynamically on size change
+            sizeSelect.addEventListener("change", function () {
+                updatePrice(sizeSelect, priceDisplay);
+            });
+
+            function updatePrice(selectElement, displayElement) {
+                // Get the selected option's data-price attribute value
+                const selectedOption = selectElement.options[selectElement.selectedIndex];
+                const price = selectedOption.getAttribute("data-price");
+
+                // Update the displayed price
+                if (price) {
+                    displayElement.textContent = `€ ${price}`;
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

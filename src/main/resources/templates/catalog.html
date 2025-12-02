@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Menü</title>
+  <link rel="stylesheet" th:href="@{/css/catalog.css}">
+  <th:block th:insert="~{fragments :: headerfiles}"></th:block>
+
+</head>
+<body>
+
+<div th:insert="~{fragments :: header(cartQuantity=${cartQuantity})}"></div>
+
+
+
+
+<div class="container-wrapper">
+  <div class="container">
+    <h2>Menü</h2>
+    <div class="searchbar-wrapper">
+      <div class="searchbar-container">
+        <form th:action="@{/catalog}" method="get" style="width: 100%;height: 100%; display: flex; justify-content: center;">
+          <input type="text" name="search" placeholder="Search..." th:value="${param.search}" />
+          <button type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+    <div class="menu-wrapper">
+      <div th:each="pizza : ${pizzas}">
+        <a th:href="@{/catalog/{id}(id=${pizza.getPizzaId()})}" class="menu-item">
+          <img th:src="${pizza.getImage()}" alt="Pizza" />
+          <h3 th:text="${pizza.getName()}">Pepperoni Pizza</h3>
+          <h4 th:text="${#numbers.formatDecimal(pizza.getPizzaPrices()[0].price, 1, 'POINT', 2, 'COMMA')} + ' €'">€ 10.00</h4>
+        </a>
+      </div>
+    </div>
+    <div class="pagination-wrapper">
+      <div th:if="${totalPages > 1}">
+        <ul class="pagination">
+          <li th:if="${currentPage > 0}">
+            <a th:href="@{/catalog(page=${currentPage - 1}, size=${size}, search=${param.search})}">Previous</a>
+          </li>
+          <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+            <a th:href="@{/catalog(page=${i}, size=${size}, search=${param.search})}"
+               th:text="${i + 1}"
+               th:classappend="${i == currentPage} ? 'active' : ''"></a>
+          </li>
+          <li th:if="${currentPage < totalPages - 1}">
+            <a th:href="@{/catalog(page=${currentPage + 1}, size=${size}, search=${param.search})}">Next</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div th:insert="~{fragments :: footer}"></div>
+
+</body>
+</html>

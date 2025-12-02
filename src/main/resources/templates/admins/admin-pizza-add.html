@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Pizza Management</title>
+    <link rel="stylesheet" th:href="@{/css/admins-css/admin-pizza-add.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admins-css/header.css}" >
+    <link rel="stylesheet" th:href="@{/css/admins-css/admin-inputs.css}">
+  </head>
+  <body>
+    <header>
+      <img src="../../static/images/logo_main.svg" alt="logo" />
+      <ul>
+        <li><a href="admin-main.html">Pizzas</a></li>
+        <li><a href="admin-orders.html">Orders</a></li>
+        <li><a href="admin-users.html">Users</a></li>
+      </ul>
+      <a href="#">Abmelden</a>
+    </header>
+
+    <main>
+      <div class="container">
+        <h2>Add Pizza</h2>
+        <form th:action="@{/admin/add}" method="POST" enctype="multipart/form-data">
+          <div class="form-group-container">
+            <div class="form__group">
+              <input
+                type="text"
+                class="form__input"
+                id="name"
+                name="name"
+                placeholder="Pizza name"
+                required
+              />
+              <label for="name" class="form__label">Pizza Name</label>
+            </div>
+            <div class="form__group">
+              <textarea
+                class="form__input"
+                id="description"
+                name="description"
+                rows="3"
+                placeholder="Description"
+                required></textarea>
+              <label for="name" class="form__label">Description</label>
+            </div>
+            <div class="form__group">
+              <label for="file-upload" class="form__label__file">Upload File</label>
+              <input
+                type="file"
+                id="file-upload"
+                name="image"
+                class="form__input form__input__file"
+              />
+              <span class="form__file-text">No file chosen</span>
+            </div>
+
+            <div class="form__row">
+                <div class="form__group__price">
+                  <label for="small-price" class="form__label">SMALL</label>
+                  <input type="number" id="small-price" class="form__input" placeholder="Price" name="smallPrice">
+                </div>
+                <div class="form__group__price">
+                  <label for="medium-price" class="form__label">MEDIUM</label>
+                  <input type="number" id="medium-price" class="form__input" placeholder="Price" name="mediumPrice">
+                </div>
+                <div class="form__group__price">
+                  <label for="big-price" class="form__label">BIG</label>
+                  <input type="number" id="big-price" class="form__input" placeholder="Price" name="largePrice">
+                </div>
+              </div>
+          </div>
+            <button type="submit" class="btn">Add Pizza</button>
+        </form>
+      </div>
+    </main>
+
+    <script>
+        document.getElementById('file-upload').addEventListener('change', function () {
+        const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+        document.querySelector('.form__file-text').textContent = fileName;
+        });
+    </script>
+
+  </body>
+</html>

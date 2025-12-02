@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Pizza Management</title>
+    <link rel="stylesheet" th:href="@{/css/order-item.css}" />
+    <th:block th:insert="~{admin-fragment :: admin-fragments-css}"></th:block>
+
+  </head>
+  <body>
+
+  <div th:insert="~{admin-fragment :: admin-header}"></div>
+
+
+  <div class="container-wrapper">
+    <div class="container">
+      <h2>Bestellung <span th:text="${order.getCartId()}">ID</span></h2>
+      <div class="order-wrapper">
+        <div class="order-left">
+          <div class="order-details">
+            <h3>Details zur Bestellung</h3>
+            <div class="order-detail">
+              <h4>Datum der Bestellung</h4>
+              <p th:text="${order.getFormattedDate()}">Order Date</p>
+            </div>
+            <div class="order-detail">
+              <h4>User</h4>
+              <a th:text="${order.users.firstName + ' ' + order.users.lastName}">User</a>
+            </div>
+            <div class="order-detail">
+              <h4>Preis bestellen</h4>
+              <p th:text="${order.calculateTotalPrice()} + ' €'">Order Price</p>
+            </div>
+            <div class="order-detail">
+              <h4>Status der Bestellung</h4>
+              <p th:text="${order.cartStatus}">Order Status</p>
+            </div>
+          </div>
+          <div class="back-button-wrapper">
+            <a class="back-button" th:href="@{/admin/order}">Zurück</a>
+          </div>
+        </div>
+        <div class="vl"></div>
+        <div class="order-right">
+          <h3>Artikel bestellen</h3>
+          <table>
+            <thead>
+            <tr>
+              <th>Bild</th>
+              <th>Produkt</th>
+              <th>Menge</th>
+              <th>Preis</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="cart-item" th:each="item : ${order.items}">
+              <td><img th:src="${item.pizza.image}" alt="pizza image"/></td>
+              <td th:text="${item.pizza.name}">Product Name</td>
+              <td th:text="${item.quantity}">Product Quantity</td>
+              <td th:text="${item.currentPrice  + ' €'}">Product Price</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

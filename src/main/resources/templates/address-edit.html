@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Address</title>
+    <link rel="stylesheet" th:href="@{/css/address-edit.css}">
+    <th:block th:insert="~{fragments :: headerfiles}"></th:block>
+
+</head>
+<body>
+
+<div th:insert="~{fragments :: header(cartQuantity=${0})}"></div>
+
+
+<div class="container-wrapper">
+    <div class="container">
+        <h2>Addresses</h2>
+        <div class="menu-wrapper">
+            <div th:each="address : ${deliveryAddresses}" class="item-wrapper">
+                <a th:href="@{/customer/address-edit/{id}(id = ${address.deliveryAddressId})}" class="menu-item">
+                    <h3 th:text="${address.town}">Stadt</h3>
+                    <h4 th:text="${address.getStreetHouseNumber()}">Address</h4>
+                    <span th:text="${address.getPostalCode()}">71233</span>
+                </a>
+            </div>
+            <div th:if="${deliveryAddresses.size() <= 3}" class="item-wrapper">
+                <a th:href="@{/customer/new-address}" class="menu-item-new">
+                    <h3>Neue Adresse</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div th:insert="~{fragments :: footer}"></div>
+
+</body>
+</html>

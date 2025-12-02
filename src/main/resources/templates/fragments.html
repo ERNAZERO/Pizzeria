@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:fragment="headerfiles">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/fragments.css}">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+
+</head>
+<body>
+
+<th:block th:fragment="styles">
+    <link rel="stylesheet" th:href="@{/css/fragments.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</th:block>
+
+
+<header th:fragment="header (cartQuantity)"  class="header">
+    <img th:src="@{/images/logo_main.svg}" alt="Pizza" />
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/catalog}">Manü</a></li>
+            <li><a th:href="@{/cart}">Warenkorb <span class="cart-badge"  th:if="${cartQuantity > 0}" th:text="${cartQuantity}"></span>
+            </a></li>
+            <li><a href="#">Über uns</a></li>
+            <li><a href="#">Kontakte</a></li>
+        </ul>
+    </nav>
+    <a sec:authorize="isAnonymous()" th:href="@{/login}">Anmelden</a>
+    <div sec:authorize="isAuthenticated()" class="user-wrapper">
+        <div class="dropdown">
+            <div class="user-name-and-icon">
+                <p><span sec:authentication="principal.firstName"></span> <span sec:authentication="principal.lastName"></span></p>
+                <div class="dropdown-content">
+                    <a th:href="@{/customer/account}">Profil</a>
+                    <a th:href="@{/logout}">Abmeldung</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<footer th:fragment="footer">
+    <div class="footer">
+        <div class="row">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+            <a href="#"><i class="fa fa-youtube"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+        </div>
+
+        <div class="row">
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/catalog}">Manü</a></li>
+                <li><a th:href="@{/cart}">Warenkorb <span class="cart-badge"  th:if="${cartQuantity > 0}" th:text="${cartQuantity}"></span>
+                </a></li>
+                <li><a href="#">Über uns</a></li>
+                <li><a href="#">Kontakte</a></li>
+            </ul>
+        </div>
+
+        <div class="row-copyright">
+            PizzaRoute Copyright © 2024 PizzaRoute - All rights reserved
+        </div>
+    </div>
+</footer>
+
+
+<div th:fragment="primaryButton (href, text)" class="primary-button-wrapper">
+    <a th:href="${href}" class="primary-button" th:text="${text}">Text</a>
+</div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dropdown = document.querySelector(".user-name-and-icon");
+        const dropdownContent = document.querySelector(".dropdown-content");
+
+        dropdown.addEventListener("click", function (event) {
+            event.preventDefault();
+            dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+        });
+
+        // Close the dropdown if the user clicks outside of it
+        window.addEventListener("click", function (event) {
+            if (!event.target.matches('.user-name-and-icon') && !event.target.closest('.dropdown')) {
+                dropdownContent.style.display = "none";
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>

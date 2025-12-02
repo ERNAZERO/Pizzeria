@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="${pizza.name}">Menü</title>
+  <link rel="stylesheet" th:href="@{/css/catalog-item.css}" />
+  <th:block th:insert="~{fragments :: headerfiles}"></th:block>
+</head>
+<body>
+<div th:insert="~{fragments :: header(cartQuantity=${cartQuantity})}"></div>
+
+<div class="container-wrapper">
+  <div class="container">
+    <div class="back-button-container">
+      <a th:href="@{/catalog}" class="back-button">Zurück</a>
+    </div>
+
+    <div class="item-container">
+      <img th:src="${pizza.getImage()}" alt="" />
+      <div class="text-side-container">
+        <span th:text="${pizza.getName()}">Pepperoni Pizza</span>
+        <p>
+          Bei uns dreht sich alles um frische Zutaten, fantastische
+          Geschmacksrichtungen und die perfekte Pizza für Sie! Sind Sie
+          bereit, loszulegen? Fangen wir an! Bei uns dreht sich alles um
+          frische Zutaten, fantastische Geschmacksrichtungen und die
+          perfekte Pizza für Sie! Sind Sie bereit, loszulegen? Fangen wir
+          an!
+        </p>
+        <form method="post" th:action="@{/cart/add}" th:object="${pizzaToCartDto}" style="width: 100%">
+          <div class="catalog-item-form-wrapper">
+            <input type="hidden" name="pizzaId" th:value="${pizza.getPizzaId()}" />
+            <input type="hidden" name="quantity" id="hiddenQuantity" value="1" />
+            <select name="size" id="size">
+              <option value="SMALL" th:data-price="${pizza.getPizzaPrices()[0].price}">Small</option>
+              <option value="MEDIUM" th:data-price="${pizza.getPizzaPrices()[1].price}">Medium</option>
+              <option value="LARGE" th:data-price="${pizza.getPizzaPrices()[2].price}">Large</option>
+            </select>
+            <div class="counter">
+              <button type="button" class="counter-btn" id="decrement">-</button>
+              <div class="counter-value" id="counterValue">1</div>
+              <button type="button" class="counter-btn" id="increment">+</button>
+            </div>
+
+            <h4 id="price-display" th:text="${pizza.getPizzaPrices()[0].price} + ' €'">€ 10.00</h4>
+            <button type="submit" class="primary-button">IN WARENKORB</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:insert="~{fragments :: footer}"></div>
+
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const counters = document.querySelectorAll(".counter");
+
+    counters.forEach((counter) => {
+      const decrementButton = counter.querySelector("#decrement");
+      const incrementButton = counter.querySelector("#increment");
+      const counterValue = counter.querySelector("#counterValue");
+      const hiddenQuantityInput = counter.closest("form").querySelector("#hiddenQuantity");
+
+      let quantity = parseInt(counterValue.textContent);
+
+      decrementButton.addEventListener("click", function () {
+        if (quantity > 1) {
+          quantity--;
+          counterValue.textContent = quantity;
+          hiddenQuantityInput.value = quantity;
+        }
+      });
+
+      incrementButton.addEventListener("click", function () {
+        if (quantity < 10){
+          quantity++;
+          counterValue.textContent = quantity;
+          hiddenQuantityInput.value = quantity;
+        }
+
+      });
+    });
+  });
+
+
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const sizeSelect = document.getElementById("size");
+    const priceDisplay = document.getElementById("price-display");
+
+    // Set initial price based on the default selection
+    updatePrice();
+
+    // Event listener for changes in the select dropdown
+    sizeSelect.addEventListener("change", function () {
+      updatePrice();
+    });
+
+    function updatePrice() {
+      // Get the selected option's data-price attribute value
+      const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
+      const price = selectedOption.getAttribute("data-price");
+
+      // Update the displayed price
+      priceDisplay.textContent = `€ ${price}`;
+    }
+  });
+
+</script>
+</body>
+</html>

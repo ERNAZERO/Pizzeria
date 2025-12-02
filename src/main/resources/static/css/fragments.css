@@ -1,0 +1,314 @@
+@import url("https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+body {
+    font-family: "Inria Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+/* .HEADER */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 150px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header img {
+    width: 60px;
+    height: 60px;
+}
+
+.header nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 40%;
+}
+
+.header nav ul {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.header nav ul li {
+    list-style: none;
+}
+
+.header a {
+    text-decoration: none;
+    font: 14px "Josefin Slab", serif;
+    position: relative;
+    padding: 10px 5px;
+    color: #262626;
+    transition: 1s;
+    z-index: 1;
+}
+
+.header a:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-top: 2px solid #da592f;
+    border-bottom: 2px solid #da592f;
+    transform: scaleY(2);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.header a:after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #da592f;
+    transform: scale(0);
+    opacity: 0;
+    transition: 0.3s;
+    z-index: -1;
+}
+
+.header a:hover {
+    color: white;
+}
+
+.header a:hover:before {
+    transform: scaleY(1);
+    opacity: 1;
+}
+
+.header a:hover:after {
+    transform: scaleY(1);
+    opacity: 1;
+}
+
+
+.user-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.user-wrapper img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* User name and icon styling */
+.user-name-and-icon {
+    cursor: pointer;
+    text-decoration: none;
+    font-family: "Josefin Slab", serif;
+    font-size: 14px;
+}
+
+/* Dropdown content - hidden by default */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change link color on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show the dropdown content when hovering over the dropdown container */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.cart-badge {
+    background-color: #da592f;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    font-size: 12px;
+    top: -10px;
+    right: -10px;
+}
+
+/* .HEADER END */
+
+
+
+/* FOOTER TEIL */
+
+.footer {
+    background: #da592f;
+    padding: 30px 0;
+    font-family: "Josefin Slab", serif;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+.row-copyright {
+    width: 100%;
+    color: white;
+    font-size: 0.8em;
+    margin-top: 40px;
+}
+
+.footer .row {
+    margin-bottom: 40px;
+    width: 100%;
+    color: white;
+    font-size: 1em;
+}
+
+.footer .row a {
+    text-decoration: none;
+    color: white;
+    transition: 0.5s;
+    tranform: scale(1.5, 1.5);
+}
+
+.footer .row a:hover {
+    color: black;
+}
+
+.footer .row ul li {
+    display: inline-block;
+    margin: 0 30px;
+}
+
+.footer .row a i {
+    font-size: 2em;
+    margin: 0 2%;
+}
+
+/* FOOTER TEIL END */
+
+
+@media (max-width: 768px) {
+    .header {
+        flex-wrap: wrap;
+        padding: 10px 20px;
+    }
+
+    .header img {
+        width: 50px;
+        height: 50px; /* Adjust logo size */
+    }
+
+    .header nav {
+        width: 100%; /* Take full width for navigation */
+        margin-top: 10px;
+    }
+
+    .header nav ul {
+        flex-direction: column; /* Stack menu items vertically */
+        align-items: center;
+    }
+
+    .header nav ul li {
+        margin-bottom: 10px; /* Add space between items */
+    }
+
+
+    .footer {
+        text-align: left;
+        padding: 5%;
+    }
+    .footer .row ul li {
+        display: block;
+        margin: 10px 0;
+        text-align: left;
+    }
+    .footer .row a i {
+        margin: 0 3%;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 10px; /* Further reduce padding for very small screens */
+    }
+
+    .header img {
+        width: 40px;
+        height: 40px; /* Further adjust logo size */
+    }
+
+    .header a {
+        font-size: 12px; /* Adjust font size for links */
+    }
+}
+
+.primary-button-wrapper {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.primary-button-wrapper a {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+}
+
+.primary-button {
+    background-color: #000;
+    width: 40%;
+    color: white;
+    font-family: "Inria Sans", sans-serif;
+    font-size: 16px;
+    border: none;
+    border-radius: 50px;
+    height: 50px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.primary-button:hover {
+    background: #1f1f1f;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 #2c2c2c;
+    transition: all 250ms linear;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Pizza Management</title>
+    <link rel="stylesheet" th:href="@{/css/admins-css/admin-users.css}" />
+    <th:block th:insert="~{admin-fragment :: admin-fragments-css}"></th:block>
+
+  </head>
+  <body>
+  <div th:insert="~{admin-fragment :: admin-header}"></div>
+
+  <main>
+      <div class="container">
+        <h2>Users List</h2>
+        <div class="search-box-container">
+          <input type="text" placeholder="Search User" />
+          <button type="submit">Search</button>
+        </div>
+
+        <ul class="responsive-table">
+          <li class="table-header">
+            <div class="col col-1">Name</div>
+            <div class="col col-2">Email</div>
+            <div class="col col-3">Status</div>
+            <div class="col col-4">Action</div>
+          </li>
+          <li class="table-row" th:each="user : ${users}">
+            <div class="col col-1" data-label="ID" th:text="${user.firstName + ' ' + user.lastName}">NAME</div>
+            <div class="col col-2" data-label="Pizza Name" th:text="${user.email}">Peperoni</div>
+            <div class="col col-3" data-label="Pizza Status" th:text="${user.userStatus}">ACTIVE</div>
+            <div class="col col-4 btns" data-label="ACTION">
+              <a th:href="@{/admin/users/{id}(id = ${user.userId})}" class="btn-view">View</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </main>
+
+  <a th:href="@{/admin/users/create-user}" class="float">
+    <img class="my-float" th:src="@{/images/plus_icon.svg}" alt="">
+  </a>
+
+  </body>
+</html>
